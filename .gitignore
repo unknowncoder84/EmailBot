@@ -1,0 +1,33 @@
+# OAuth credentials and tokens
+credentials.json
+token.pickle
+
+# Sent email log
+sent_log.json
+
+# CSV files with lead data
+*.csv
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.pytest_cache/
+.hypothesis/
+
+# OS
+.DS_Store
+Thumbs.db

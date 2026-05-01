@@ -1,0 +1,16 @@
+[
+  {
+    "id": "website-indian",
+    "name": "Website Pitch (Indian)",
+    "subject": "Quick question about your online presence",
+    "body": "Hi {name},\n\nI noticed your business and wanted to reach out. I'm a full-stack developer based in Mumbai, and I specialize in building professional websites that help businesses grow their online presence.\n\nI've recently completed projects for:\n- A dental clinic in Mumbai (modern booking system and patient portal)\n- A law firm in Mumbai (professional website with case management features)\n- An ecommerce business in Mumbai (full online store with payment integration)\n\nI'd love to discuss how I can help your business with a professional website. My rates start at ₹12,000-15,000.\n\nBest regards,\n{sender_name}\nFull-Stack Developer | Mumbai\nPhone: {sender_phone}\nPortfolio: {sender_portfolio}",
+    "is_default": true
+  },
+  {
+    "id": "management-indian",
+    "name": "Management Tool Pitch (Indian)",
+    "subject": "Are you still managing your operations manually?",
+    "body": "Hi {name},\n\nI noticed your business and wanted to reach out. I'm a full-stack developer based in Mumbai, and I specialize in building custom management systems that streamline operations and eliminate manual processes.\n\nI've recently completed projects for:\n- A dental clinic in Mumbai (modern booking system and patient portal)\n- A law firm in Mumbai (Legal Management System for case tracking and client management)\n- An ecommerce business in Mumbai (Business Dashboard for inventory and order management)\n\nI'd love to discuss how I can help automate your business operations with a custom management system. My rates start at ₹40,000+.\n\nBest regards,\n{sender_name}\nFull-Stack Developer | Mumbai\nPhone: {sender_phone}\nPortfolio: {sender_portfolio}",
+    "is_default": false
+  }
+]

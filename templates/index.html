@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Campaign Manager</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="header-left">
+      <span class="logo">📧</span>
+      <h1>Email Campaign Manager</h1>
+    </div>
+    <div id="auth-status" class="auth-badge auth-unknown">Checking auth…</div>
+  </header>
+
+  <nav>
+    <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+    <button class="nav-btn" data-view="upload">Upload Leads</button>
+    <button class="nav-btn" data-view="templates">Email Templates</button>
+    <button class="nav-btn" data-view="history">History</button>
+    <button class="nav-btn" data-view="settings">Settings</button>
+  </nav>
+
+  <main>
+    <!-- DASHBOARD -->
+    <div id="dashboard-view" class="view active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-label">Total Leads</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value green" id="stat-sent">0</div>
+          <div class="stat-label">Sent</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value red" id="stat-failed">0</div>
+          <div class="stat-label">Failed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value yellow" id="stat-skipped">0</div>
+          <div class="stat-label">Skipped</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value blue" id="stat-remaining">—</div>
+          <div class="stat-label">Remaining (limit)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-rate">—</div>
+          <div class="stat-label">Success Rate</div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-header">
+          <span id="campaign-status-label">Idle</span>
+          <span id="progress-pct">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+        </div>
+        <div id="current-lead-display" class="current-lead"></div>
+      </div>
+
+      <div class="campaign-controls">
+        <button id="btn-start" class="btn btn-primary" onclick="app.startCampaign()">▶ Start Campaign</button>
+        <button id="btn-stop" class="btn btn-danger" onclick="app.stopCampaign()" style="display:none">⏹ Stop Campaign</button>
+      </div>
+
+      <div id="campaign-message" class="message" style="display:none"></div>
+    </div>
+
+    <!-- UPLOAD -->
+    <div id="upload-view" class="view">
+      <div class="upload-area" id="upload-area">
+        <div class="upload-icon">📂</div>
+        <p>Drag & drop a CSV file here, or click to browse</p>
+        <input type="file" id="csv-input" accept=".csv" style="display:none" onchange="app.handleFileSelect(event)" />
+        <button class="btn btn-primary" onclick="document.getElementById('csv-input').click()">Choose CSV File</button>
+      </div>
+
+      <div id="upload-result" style="display:none">
+        <div class="upload-stats">
+          <span class="badge green" id="up-new">0 new</span>
+          <span class="badge yellow" id="up-dup">0 duplicates</span>
+          <span class="badge blue" id="up-total">0 total</span>
+          <span class="badge" id="up-time">~0 min</span>
+        </div>
+        <table class="data-table" id="preview-table">
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Pitch Type</th><th>Price</th><th>Status</th></tr>
+          </thead>
+          <tbody id="preview-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TEMPLATES -->
+    <div id="templates-view" class="view">
+      <div class="templates-header">
+        <h2>Email Templates</h2>
+        <button class="btn btn-primary" onclick="app.showNewTemplateForm()">+ New Template</button>
+      </div>
+
+      <div id="new-template-form" class="template-form" style="display:none">
+        <h3>Create New Template</h3>
+        <div class="form-group">
+          <label>Template Name</label>
+          <input type="text" id="tpl-name" placeholder="e.g., Custom Pitch" />
+        </div>
+        <div class="form-group">
+          <label>Email Subject</label>
+          <input type="text" id="tpl-subject" placeholder="e.g., Quick question about your business" />
+        </div>
+        <div class="form-group">
+          <label>Email Body</label>
+          <textarea id="tpl-body" rows="12" placeholder="Use {name} for recipient's first name, {sender_name}, {sender_phone}, {sender_portfolio} for your info"></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" onclick="app.saveNewTemplate()">💾 Save Template</button>
+          <button class="btn btn-secondary" onclick="app.hideNewTemplateForm()">Cancel</button>
+        </div>
+      </div>
+
+      <div id="templates-list" class="templates-list"></div>
+    </div>
+
+    <!-- HISTORY -->
+    <div id="history-view" class="view">
+      <div class="history-header">
+        <h2>Sent Email History</h2>
+        <span id="history-total" class="badge blue">0 total</span>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Email</th><th>Sent At</th></tr></thead>
+        <tbody id="history-body"></tbody>
+      </table>
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="settings-view" class="view">
+      <div class="settings-card">
+        <h2>Gmail Authentication</h2>
+        <div id="auth-detail" class="auth-detail"></div>
+        <button class="btn btn-secondary" onclick="app.initiateAuth()">🔑 Re-authenticate with Gmail</button>
+      </div>
+
+      <div class="settings-card">
+        <h2>Sending Configuration</h2>
+        <div class="form-group">
+          <label>Daily Limit (1–500)</label>
+          <input type="number" id="cfg-daily-limit" min="1" max="500" />
+        </div>
+        <div class="form-group">
+          <label>Delay Between Sends in seconds (10–300)</label>
+          <input type="number" id="cfg-delay" min="10" max="300" />
+        </div>
+        <div id="cfg-error" class="error-text" style="display:none"></div>
+        <button class="btn btn-primary" onclick="app.saveConfig()">💾 Save Settings</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
