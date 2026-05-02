@@ -29,7 +29,7 @@ cd EmailBot
 
 2. Install dependencies:
 ```bash
-pip install flask flask-cors google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
+pip install -r requirements.txt
 ```
 
 3. Add your Gmail API credentials:
@@ -43,6 +43,28 @@ python app.py
 ```
 
 Open your browser and navigate to: **http://localhost:3000**
+
+## Deployment
+
+### Deploy to Render (Recommended - Free)
+
+1. Go to [Render.com](https://render.com) and sign up
+2. Click "New +" → "Web Service"
+3. Connect your GitHub repository: `unknowncoder84/EmailBot`
+4. Render will auto-detect the `render.yaml` configuration
+5. Click "Create Web Service"
+6. Your app will be live at: `https://emailbot-xxxx.onrender.com`
+
+**Note:** You'll need to upload `credentials.json` and authenticate with Gmail after deployment.
+
+### Other Deployment Options
+
+- **Railway.app** - Similar to Render, supports Python
+- **Heroku** - Requires credit card but has free tier
+- **PythonAnywhere** - Good for Python apps
+- **DigitalOcean App Platform** - $5/month
+
+**Important:** GitHub Pages won't work because this is a Flask app (needs Python server), not a static website.
 
 ## Usage
 

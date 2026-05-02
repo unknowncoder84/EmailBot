@@ -258,9 +258,10 @@ def set_default_template(template_id):
 # ── Entry point ───────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 3000))
     try:
-        print("Starting Email Campaign Manager on http://localhost:3000")
-        app.run(host="0.0.0.0", port=3000, debug=False, threaded=True)
+        print(f"Starting Email Campaign Manager on port {port}")
+        app.run(host="0.0.0.0", port=port, debug=False, threaded=True)
     except OSError as e:
         print(f"Error: Could not start server - {e}")
         sys.exit(1)
